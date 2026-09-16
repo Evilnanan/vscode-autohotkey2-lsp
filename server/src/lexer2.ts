@@ -1304,6 +1304,9 @@ export function getClassBase(node: AhkSymbol, lex?: Lexer) {
 			} else name = name.toUpperCase();
 			break;
 	}
+	// Synthetic built-in types (for example literals) must honor the active .d.ahk.
+	if (!ll && node.is_builtin && lex)
+		ll = lex;
 	if (!ll)
 		return (ahkVars[name] as ClassNode)?.prototype;
 	cls = findClass(ll, name, pos, uri)!;
